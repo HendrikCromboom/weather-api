@@ -1,3 +1,10 @@
+//Key is the correct one
+var _0x39eb = ['a22242314b0694ba3aa5480b6172d174', '3b57edc1f996dddcab25', '6b4f7d4420caea5b058e7a4ee75467c1'];
+(function (_0x6a5584, _0x39ebd3) { var _0x40c8c6 = function (_0xee52d2) { while (--_0xee52d2) {
+    _0x6a5584['push'](_0x6a5584['shift']());
+} }; _0x40c8c6(++_0x39ebd3); }(_0x39eb, 0x7f));
+var _0x40c8 = function (_0x6a5584, _0x39ebd3) { _0x6a5584 = _0x6a5584 - 0x0; var _0x40c8c6 = _0x39eb[_0x6a5584]; return _0x40c8c6; }; // @ts-ignore
+var obscure = { 'key': _0x40c8('0x1'), 'hery': _0x40c8('0x2'), 'keyreal': _0x40c8('0x0') };
 // Classes to shorthand DOM manipulation
 function getId(id) { return document.getElementById(id); }
 function returnValue(id) { return getId(id).value; }
@@ -10,6 +17,7 @@ var library = {
     lat: "",
     lon: "",
     sixDayTemp: [],
+    weather: [],
     sixDayWeather: [],
     sixDayIcon: [],
     days: [0, 0, 0, 0, 0, 0]
@@ -32,7 +40,7 @@ function getInputFields() {
 // Fetching the data from the API
 function getForecast() {
     // The &units turns the returned api to degrees C instead of degrees F
-    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + library.city + "," + library.country + "&units=metric&appid=" + library.key)
+    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + library.city + "," + library.country + "&units=metric&appid=" + obscure.hery)
         .then(function (response) { return response.json(); })
         .then(function (data) {
         console.log(data);
@@ -41,9 +49,11 @@ function getForecast() {
         library.lat = data["city"]["coord"].lat;
         //For each day that needs to be displayed we loop over the array of 40 days and return the objects that we need
         library.days.forEach(function (day, i) {
+            i.toString();
             library.sixDayTemp.push(data["list"][i]["main"].temp); //This stores the average temperature in an array of 6 days
-            library.sixDayWeather.push(data["list"][i]["weather"][i].main); //This stores the named weather in an array of 6 days
-            library.sixDayIcon.push(data["list"][i]["weather"][i].icon); //This stores the icon name  in an array of 6 days
+            library.sixDayWeather.push(data["list"][i]["weather"][0].main); //This stores the named weather in an array of 6 days
+            console.log(library.sixDayWeather);
+            //library.sixDayIcon.push(data["list"][i.toString()]["weather"][i.toString()].icon) //This stores the icon name  in an array of 6 days
         });
     })["catch"](function (error) {
         console.log(error); // Catches any errors regarding the fetch -> the fetch is a promise and requires a valid XML input
