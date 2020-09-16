@@ -60,7 +60,8 @@ function getForecast() {
                         library.sixDayTemp.push(data["list"][i]["main"].temp) //This stores the average temperature in an array of 6 days
                         library.sixDayWeather.push(data["list"][i]["weather"][0].main) //This stores the named weather in an array of 6 days
                         console.log(library.sixDayWeather)
-                        //library.sixDayIcon.push(data["list"][i.toString()]["weather"][i.toString()].icon) //This stores the icon name  in an array of 6 days
+                        library.sixDayIcon.push(data["list"][i]["weather"][0].icon) //This stores the icon name  in an array of 6 days
+                        console.log(library.sixDayIcon)
 
                         })
         })
