@@ -4,9 +4,9 @@
 
 Sprint 1
 
-    create an account on this platform
-    You are going to have to generate a key.
-    create a home page where you ask the visitor to enter the city of his choice.
+    create an account on this platform. [x]
+    You are going to have to generate a key. [x]
+    create a home page where you ask the visitor to enter the city of his choice. [x]
 
 Sprint 2
 
