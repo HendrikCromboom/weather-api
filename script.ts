@@ -10,6 +10,7 @@ let library : {
     lon: string,
     sixDayTemp: number[],
     sixDayWeather: string[],
+    sixDayIcon: string[],
     days: number[]
 }={
     city: "",
@@ -19,6 +20,7 @@ let library : {
     lon: "",
     sixDayTemp: [],
     sixDayWeather: [],
+    sixDayIcon: [],
     days: [0,0,0,0,0,0]
 }
 
@@ -44,7 +46,8 @@ function getForecast() {
                     library.lat = data["city"]["coord"].lat
                     library.days.forEach((day, i)=>{
                         library.sixDayTemp.push(data["list"][i]["main"].temp)
-                        library.sixDayTemp.push(data["list"][i]["weather"][i].main)
+                        library.sixDayWeather.push(data["list"][i]["weather"][i].main)
+                        library.sixDayIcon.push(data["list"][i]["weather"][i].icon)
                         })
         })
 }
