@@ -7,7 +7,8 @@ var library = {
     key: "",
     lat: "",
     lon: "",
-    today: [],
+    sixDayTemp: [],
+    sixDayWeather: [],
     days: [0, 0, 0, 0, 0, 0]
 };
 function formSubmit() {
@@ -22,19 +23,16 @@ function getInputFields() {
     getForecast();
 }
 function getForecast() {
-    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + library.city + "," + library.country + "&appid=" + library.key)
+    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + library.city + "," + library.country + "&units=metric&appid=" + library.key)
         .then(function (response) { return response.json(); })
         .then(function (data) {
+        console.log(data);
         library.lon = data["city"]["coord"].lon;
         library.lat = data["city"]["coord"].lat;
         library.days.forEach(function (day, i) {
-            library.today.push(data["list"][i]["main"].temp);
+            library.sixDayTemp.push(data["list"][i]["main"].temp);
+            library.sixDayTemp.push(data["list"][i]["weather"][i].main);
         });
     });
 }
-/*function getOneCall() {
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + library.lat + "&lon=" + library.lon + "&appid=a22242314b0694ba3aa5480b6172d174")
-        .then(response => response.json())
-        .then(data => {
-        })
-}*/ 
+//a22242314b0694ba3aa5480b6172d174
