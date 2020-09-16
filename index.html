@@ -6,7 +6,26 @@
     <title>Weather API by Hendrik Cromboom</title>
 </head>
 <body>
+<div class="container">
+    <table>
+        <tr>
+            <td>
+                <form autocomplete="off" id="inputForm" onsubmit="event.preventDefault(); formSubmit()">
+                    <div>
+                        <label>City:
+                            <br>
+                            <input type="text" name="pokeNameOrId" alt="Insert City or Coordinates" id="inputField">
+                        </label>
+                    </div>
 
+                    <label>
+                        <br>
+                        <input type="submit" value="Submit">
+                    </label>
+                </form>
+            </td>
+    </table>
+</div>
 <script src="script.js"></script>
 </body>
 </html>
