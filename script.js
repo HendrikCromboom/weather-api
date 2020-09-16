@@ -35,6 +35,8 @@ function getForecast() {
             library.sixDayWeather.push(data["list"][i]["weather"][i].main);
             library.sixDayIcon.push(data["list"][i]["weather"][i].icon);
         });
+    })["catch"](function (error) {
+        console.log(error);
     });
 }
 //a22242314b0694ba3aa5480b6172d174

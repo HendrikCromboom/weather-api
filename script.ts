@@ -50,6 +50,9 @@ function getForecast() {
                         library.sixDayIcon.push(data["list"][i]["weather"][i].icon)
                         })
         })
+        .catch(error=>{
+            console.log(error)
+        })
 }
 
 
