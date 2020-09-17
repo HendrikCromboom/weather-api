@@ -13,14 +13,10 @@ function resetValue(id) { getId(id).value = ""; }
 var library = {
     city: "",
     country: "",
-    key: "",
-    lat: "",
-    lon: "",
     currentTemp: 0,
     currentWeather: "",
     currentIcon: "",
     sixDayTemp: [],
-    weather: [],
     sixDayWeather: [],
     sixDayIcon: [],
     days: [0, 0, 0, 0, 0, 0],
@@ -33,33 +29,30 @@ function formSubmit() {
 }
 // Pulling the input values from the DOM
 function getInputFields() {
-    library.city = returnValue("inputFieldCity");
-    library.country = returnValue("inputFieldCountry");
-    library.key = returnValue("inputFieldKey");
+    var city = returnValue("inputFieldCity");
+    var country = returnValue("inputFieldCountry");
+    //Calls the API function, will setup a class later
+    getForecast(city, country);
     //Resetting the input fields
     resetValue("inputFieldCity");
     resetValue("inputFieldCountry");
-    //Calls the API function, will setup a class later
-    getForecast();
 }
 // Fetching the data from the API
-function getForecast() {
+function getForecast(city, country) {
     // The &units turns the returned api to degrees C instead of degrees F
-    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + library.city + "," + library.country + "&units=metric&appid=" + obscure.hery)
+    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "," + country + "&units=metric&appid=" + obscure.hery)
         .then(function (response) { return response.json(); })
         .then(function (data) {
         //longitude and latitude for testing purposes
-        library.lon = data["city"]["coord"].lon;
-        library.lat = data["city"]["coord"].lat;
-        console.log(library.lon);
-        console.log(library.lat);
-        getOneCall();
+        var longitude = data["city"]["coord"].lon;
+        var latitude = data["city"]["coord"].lat;
+        getOneCall(longitude, latitude);
     })["catch"](function (error) {
         console.log(error); // Catches any errors regarding the fetch -> the fetch is a promise and requires a valid XML input
     });
 }
-function getOneCall() {
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + library.lat + "&lon=" + library.lon + "&exclude=hourly,minutely&units=metric&appid=" + obscure.hery)
+function getOneCall(lon, lat) {
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly,minutely&units=metric&appid=" + obscure.hery)
         .then(function (response) { return response.json(); })
         .then(function (data) {
         console.log(data);
@@ -80,4 +73,3 @@ for (var i = 0; i < library.days.length; i++) {
     library.daysOfThisWeek.push(library.daysOfWeekName[dayName - 1]);
     dayName === 7 ? dayName = 1 : dayName++;
 }
-console.log(library.daysOfThisWeek);
