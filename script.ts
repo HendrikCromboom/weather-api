@@ -37,6 +37,7 @@ function getInputFields(){// Pulling the input values from the DOM
     let city: string = returnValue("inputFieldCity");// Local input values for the 2 boxes on the HTML
     let country: string = returnValue("inputFieldCountry");//
     getForecast(city, country);//Calls the API function, will setup a class later
+    getImage(city);
     resetValue("inputFieldCity")//Resetting the input fields: shorthand -> check top of page
     resetValue("inputFieldCountry")//Resetting the input fields: shorthand -> check top of page
 
@@ -81,6 +82,16 @@ function getOneCall(lon, lat) {
             console.log(error) // Catches any errors regarding the second fetch -> the fetch is a promise and requires a valid XML input
         })
 }
+function getImage(city){
+    fetch("https://api.unsplash.com/photos/random?query="+ city+ ",city&client_id=W-gpszfB92DY_MRzZH_iXOkG1dCl_yte33wiDhD6Jvk")
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+            console.log(data)
+            let urls = data.urls
+            let regular = urls.regular
+            setBackground(regular)
+                })
+}
 function outputForm(){
     getId("current").innerHTML = "Current"
     getId("today").innerHTML = "Today"
@@ -104,4 +115,7 @@ function outputForm(){
     getId("fourWeather").innerHTML = library.sixDayWeather[5]
     getId("fiveWeather").innerHTML = library.sixDayWeather[6]
 
+}
+function setBackground(thisUrl){
+    document.body.style.backgroundImage = `url('${thisUrl}')`
 }
