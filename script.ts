@@ -1,13 +1,13 @@
-//Key is the correct one, TS ignore for obs
+// -- Key is the correct one, TS ignore for obs --
 let _0x39eb=['a22242314b0694ba3aa5480b6172d174','3b57edc1f996dddcab25','6b4f7d4420caea5b058e7a4ee75467c1'];(function(_0x6a5584,_0x39ebd3){const _0x40c8c6=function(_0xee52d2){while(--_0xee52d2){_0x6a5584['push'](_0x6a5584['shift']());}};_0x40c8c6(++_0x39ebd3);}(_0x39eb,0x7f));const _0x40c8=function(_0x6a5584,_0x39ebd3){_0x6a5584=_0x6a5584-0x0;let _0x40c8c6=_0x39eb[_0x6a5584];return _0x40c8c6;};// @ts-ignore
 let obscure={'key':_0x40c8('0x1'),'hery':_0x40c8('0x2'),'keyreal':_0x40c8('0x0')};
-// Classes to shorthand DOM manipulation
+// -- Classes to shorthand DOM manipulation --
 function getId(id){ return document.getElementById(id)}
 function returnValue(id){ return (<HTMLInputElement>getId(id)).value}
 function resetValue(id){(<HTMLInputElement>getId(id)).value = ""}
-//Days contains the set number of days we want to display as it's length value
+// -- Days contains the set number of days we want to display as it's length value, for more days add another 0, beware that the API supports 7 days MAX --
 let days:number[] = [0,0,0,0,0,0]
-// OOP Constructor to simplify, reset and preset the data
+// -- OOP Constructor to simplify, reset and preset the data in typescript --
 const library : {
     currentTemp: number,
     currentWeather: string,
