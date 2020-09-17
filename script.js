@@ -21,39 +21,34 @@ var library = {
     sixDayIcon: [],
     daysOfThisWeek: []
 };
-// Function that gets called by the inline HTML to prevent default reload
 function formSubmit() {
     getInputFields();
 }
-// Pulling the input values from the DOM
 function getInputFields() {
-    var city = returnValue("inputFieldCity");
-    var country = returnValue("inputFieldCountry");
-    //Calls the API function, will setup a class later
-    getForecast(city, country);
-    //Resetting the input fields
-    resetValue("inputFieldCity");
-    resetValue("inputFieldCountry");
+    var city = returnValue("inputFieldCity"); // Local input values for the 2 boxes on the HTML
+    var country = returnValue("inputFieldCountry"); //
+    getForecast(city, country); //Calls the API function, will setup a class later
+    resetValue("inputFieldCity"); //Resetting the input fields: shorthand -> check top of page
+    resetValue("inputFieldCountry"); //Resetting the input fields: shorthand -> check top of page
 }
 // Fetching the data from the API
 function getForecast(city, country) {
     // The &units turns the returned api to degrees C instead of degrees F
-    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "," + country + "&units=metric&appid=" + obscure.hery)
-        .then(function (response) { return response.json(); })
+    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "," + country + "&units=metric&appid=" + obscure.hery) // we only fetch this to get the longitude and latitude for the all call fetch
+        .then(function (response) { return response.json(); }) // parsing the response into a temporary data structure
         .then(function (data) {
         //longitude and latitude for testing purposes
-        var longitude = data["city"]["coord"].lon;
-        var latitude = data["city"]["coord"].lat;
-        getOneCall(longitude, latitude);
+        var longitude = data["city"]["coord"].lon; //i decided to localize these variables
+        var latitude = data["city"]["coord"].lat; // <-!
+        getOneCall(longitude, latitude); // passing the variables on to the next function to keep the global scope clean
     })["catch"](function (error) {
         console.log(error); // Catches any errors regarding the fetch -> the fetch is a promise and requires a valid XML input
     });
 }
 function getOneCall(lon, lat) {
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly,minutely&units=metric&appid=" + obscure.hery)
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly,minutely&units=metric&appid=" + obscure.hery) // fetches weather data with precalculated averages
         .then(function (response) { return response.json(); })
         .then(function (data) {
-        console.log(data);
         library.sixDayTemp.push(data["current"].temp); //Pushing the current temperature to the start of the output array
         library.sixDayWeather.push(data["current"]["weather"][0].description); //Pushing the current weather to the start of the output array
         library.sixDayIcon.push(data["current"]["weather"][0].icon); //Pushing the current icon to the start of the output array
@@ -62,12 +57,12 @@ function getOneCall(lon, lat) {
             library.sixDayWeather.push(data["daily"][i]["weather"][0].description); //This stores the named weather in an array of 6 days + current
             library.sixDayIcon.push(data["daily"][i]["weather"][0].icon); //This stores the icon name  in an array of 6 days + current
         });
-        var daysOfWeekName = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        var daysOfWeekName = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]; //Days of the week to be used to turn day number to string with capital
         var dt = new Date(); // Get the current date and time
         var dayName = dt.getDay(); //Get day of week as a number
         for (var i = 0; i < days.length; i++) { //Loop over the amount of days needed for display: 6 in this case: 5 + today
             library.daysOfThisWeek.push(daysOfWeekName[dayName - 1]); //Compare the index to the days of
-            dayName === 7 ? dayName = 1 : dayName++;
+            dayName === 7 ? dayName = 1 : dayName++; //if the number of the day exceeds 7 it loops back to index 1:monday
         }
         outputForm();
     })["catch"](function (error) {
@@ -82,13 +77,13 @@ function outputForm() {
     getId("three").innerHTML = library.daysOfThisWeek[3];
     getId("four").innerHTML = library.daysOfThisWeek[4];
     getId("five").innerHTML = library.daysOfThisWeek[5];
-    getId("currentData").innerHTML = library.sixDayTemp[0].toString();
-    getId("todayData").innerHTML = library.sixDayTemp[1].toString();
-    getId("oneData").innerHTML = library.sixDayTemp[2].toString();
-    getId("twoData").innerHTML = library.sixDayTemp[3].toString();
-    getId("threeData").innerHTML = library.sixDayTemp[4].toString();
-    getId("fourData").innerHTML = library.sixDayTemp[5].toString();
-    getId("fiveData").innerHTML = library.sixDayTemp[6].toString();
+    getId("currentData").innerHTML = "<tr>" + library.sixDayTemp[0].toString() + "</tr>" + "<tr>" + "<img src='img/" + library.sixDayIcon[0].toString() + ".png'></tr>";
+    getId("todayData").innerHTML = "<tr>" + library.sixDayTemp[1].toString() + "</tr>" + "<tr>" + "<img src='img/" + library.sixDayIcon[1].toString() + ".png'></tr>";
+    getId("oneData").innerHTML = "<tr>" + library.sixDayTemp[2].toString() + "</tr>" + "<tr>" + "<img src='img/" + library.sixDayIcon[2].toString() + ".png'></tr>";
+    getId("twoData").innerHTML = "<tr>" + library.sixDayTemp[3].toString() + "</tr>" + "<tr>" + "<img src='img/" + library.sixDayIcon[3].toString() + ".png'></tr>";
+    getId("threeData").innerHTML = "<tr>" + library.sixDayTemp[4].toString() + "</tr>" + "<tr>" + "<img src='img/" + library.sixDayIcon[4].toString() + ".png'></tr>";
+    getId("fourData").innerHTML = "<tr>" + library.sixDayTemp[5].toString() + "</tr>" + "<tr>" + "<img src='img/" + library.sixDayIcon[5].toString() + ".png'></tr>";
+    getId("fiveData").innerHTML = "<tr>" + library.sixDayTemp[6].toString() + "</tr>" + "<tr>" + "<img src='img/" + library.sixDayIcon[6].toString() + ".png'></tr>";
     getId("currentWeather").innerHTML = library.sixDayWeather[0];
     getId("todayWeather").innerHTML = library.sixDayWeather[1];
     getId("oneWeather").innerHTML = library.sixDayWeather[2];
