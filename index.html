@@ -6,8 +6,7 @@
     <title>Weather API by Hendrik Cromboom</title>
 </head>
 <body>
-<div class="outer-container">
-<div class="container">
+<div class="inputTable">
     <table>
         <tr>
             <td>
@@ -24,12 +23,6 @@
                             <input type="text" name="country" alt="Insert Country" id="inputFieldCountry">
                         </label>
                     </div>
-                    <div>
-                        <label>Language
-                            <br>
-                            <input type="text" name="language" alt="Insert Language" id="inputFieldLang">
-                        </label>
-                    </div>
                     <label>
                         <br>
                         <input type="submit" value="Submit">
@@ -39,40 +32,50 @@
     </table>
 </div>
 <div class="container">
-        <table id="outputTable">
-            <thead>
-            <tr>
-                <th id="current"></th>
-                <th id="today"></th>
-                <th id="one"></th>
-                <th id="two"></th>
-                <th id="three"></th>
-                <th id="four"></th>
-                <th id="five"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th id="currentWeather" class="weather"></th>
-                <th id="todayWeather" class="weather"></th>
-                <th id="oneWeather" class="weather"></th>
-                <th id="twoWeather" class="weather"></th>
-                <th id="threeWeather" class="weather"></th>
-                <th id="fourWeather" class="weather"></th>
-                <th id="fiveWeather" class="weather"></th>
-            </tr>
-            <tr>
-                <th id="currentData"></th>
-                <th id="todayData"></th>
-                <th id="oneData"></th>
-                <th id="twoData"></th>
-                <th id="threeData"></th>
-                <th id="fourData"></th>
-                <th id="fiveData"></th>
-                </tr>
-            </tbody>
-        </table>
-</div>
+    <div class="wrapper">
+        <div id="current">Welcome! Enjoy the weather!</div>
+        <div id="currentWeather" class="weather"></div>
+        <div id="currentData"></div>
+    </div>
+    <div class="wrapper">
+        <div id="today"></div>
+        <div id="todayWeather" class="weather"></div>
+        <div id="todayData"></div>
+    </div>
+    <div class="wrapper">
+        <div id="one"></div>
+        <div id="oneWeather" class="weather"></div>
+        <div id="oneData"></div>
+    </div>
+    <div class="wrapper">
+        <div id="two"></div>
+        <div id="twoData"></div>
+        <div id="twoWeather" class="weather"></div>
+    </div>
+    <div class="wrapper">
+        <div id="three"></div>
+        <div id="threeWeather" class="weather"></div>
+        <div id="threeData"></div>
+    </div>
+    <div class="wrapper">
+        <div id="four"></div>
+        <div id="fourWeather" class="weather"></div>
+        <div id="fourData"></div>
+    </div>
+    <div class="wrapper">
+        <div id="five"></div>
+        <div id="fiveWeather" class="weather"></div>
+        <div id="fiveData"></div>
+    </div>
+
+
+
+
+
+
+
+
+
 </div>
 <script src="script.js"></script>
 </body>
