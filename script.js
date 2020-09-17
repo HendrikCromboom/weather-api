@@ -9,18 +9,16 @@ var obscure = { 'key': _0x40c8('0x1'), 'hery': _0x40c8('0x2'), 'keyreal': _0x40c
 function getId(id) { return document.getElementById(id); }
 function returnValue(id) { return getId(id).value; }
 function resetValue(id) { getId(id).value = ""; }
+//Days contains the set number of days we want to display as it's length value
+var days = [0, 0, 0, 0, 0, 0];
 // OOP Constructor to simplify, reset and preset the data
 var library = {
-    city: "",
-    country: "",
     currentTemp: 0,
     currentWeather: "",
     currentIcon: "",
     sixDayTemp: [],
     sixDayWeather: [],
     sixDayIcon: [],
-    days: [0, 0, 0, 0, 0, 0],
-    daysOfWeekName: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
     daysOfThisWeek: []
 };
 // Function that gets called by the inline HTML to prevent default reload
@@ -56,20 +54,46 @@ function getOneCall(lon, lat) {
         .then(function (response) { return response.json(); })
         .then(function (data) {
         console.log(data);
-        library.currentTemp = data["current"].temp;
-        library.days.forEach(function (day, i) {
-            library.sixDayTemp.push(data["daily"][i]["temp"].day); //This stores the average temperature in an array of 6 days
-            library.sixDayWeather.push(data["daily"][i]["weather"][0].description); //This stores the named weather in an array of 6 days
-            library.sixDayIcon.push(data["daily"][i]["weather"][0].icon); //This stores the icon name  in an array of 6 days
-            console.log(library.sixDayIcon);
+        library.sixDayTemp.push(data["current"].temp); //Pushing the current temperature to the start of the output array
+        library.sixDayWeather.push(data["current"]["weather"][0].description); //Pushing the current weather to the start of the output array
+        library.sixDayIcon.push(data["current"]["weather"][0].icon); //Pushing the current icon to the start of the output array
+        days.forEach(function (day, i) {
+            library.sixDayTemp.push(data["daily"][i]["temp"].day); //This stores the average temperature in an array of 6 days + current
+            library.sixDayWeather.push(data["daily"][i]["weather"][0].description); //This stores the named weather in an array of 6 days + current
+            library.sixDayIcon.push(data["daily"][i]["weather"][0].icon); //This stores the icon name  in an array of 6 days + current
         });
+        var daysOfWeekName = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        var dt = new Date(); // Get the current date and time
+        var dayName = dt.getDay(); //Get day of week as a number
+        for (var i = 0; i < days.length; i++) { //Loop over the amount of days needed for display: 6 in this case: 5 + today
+            library.daysOfThisWeek.push(daysOfWeekName[dayName - 1]); //Compare the index to the days of
+            dayName === 7 ? dayName = 1 : dayName++;
+        }
+        outputForm();
     })["catch"](function (error) {
         console.log(error); // Catches any errors regarding the second fetch -> the fetch is a promise and requires a valid XML input
     });
 }
-var dt = new Date();
-var dayName = dt.getDay();
-for (var i = 0; i < library.days.length; i++) {
-    library.daysOfThisWeek.push(library.daysOfWeekName[dayName - 1]);
-    dayName === 7 ? dayName = 1 : dayName++;
+function outputForm() {
+    getId("current").innerHTML = "Current";
+    getId("today").innerHTML = "Today";
+    getId("one").innerHTML = "Tomorrow";
+    getId("two").innerHTML = library.daysOfThisWeek[2];
+    getId("three").innerHTML = library.daysOfThisWeek[3];
+    getId("four").innerHTML = library.daysOfThisWeek[4];
+    getId("five").innerHTML = library.daysOfThisWeek[5];
+    getId("currentData").innerHTML = library.sixDayTemp[0].toString();
+    getId("todayData").innerHTML = library.sixDayTemp[1].toString();
+    getId("oneData").innerHTML = library.sixDayTemp[2].toString();
+    getId("twoData").innerHTML = library.sixDayTemp[3].toString();
+    getId("threeData").innerHTML = library.sixDayTemp[4].toString();
+    getId("fourData").innerHTML = library.sixDayTemp[5].toString();
+    getId("fiveData").innerHTML = library.sixDayTemp[6].toString();
+    getId("currentWeather").innerHTML = library.sixDayWeather[0];
+    getId("todayWeather").innerHTML = library.sixDayWeather[1];
+    getId("oneWeather").innerHTML = library.sixDayWeather[2];
+    getId("twoWeather").innerHTML = library.sixDayWeather[3];
+    getId("threeWeather").innerHTML = library.sixDayWeather[4];
+    getId("fourWeather").innerHTML = library.sixDayWeather[5];
+    getId("fiveWeather").innerHTML = library.sixDayWeather[6];
 }
