@@ -37,7 +37,7 @@ function getInputFields(){// Pulling the input values from the DOM
     let city: string = returnValue("inputFieldCity");// Local input values for the 2 boxes on the HTML
     let country: string = returnValue("inputFieldCountry");//
     getForecast(city, country);//Calls the API function, will setup a class later
-    getImage(city);
+    //getImage(city);
     resetValue("inputFieldCity")//Resetting the input fields: shorthand -> check top of page
     resetValue("inputFieldCountry")//Resetting the input fields: shorthand -> check top of page
 
@@ -61,11 +61,11 @@ function getOneCall(lon, lat) {
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly,minutely&units=metric&appid=" + obscure.hery)// fetches weather data with precalculated averages
         .then(response => response.json())
         .then(data => {
-            library.sixDayTemp.push(data["current"].temp)//Pushing the current temperature to the start of the output array
+            library.sixDayTemp.push(Math.floor(data["current"].temp))//Pushing the current temperature to the start of the output array
             library.sixDayWeather.push(data["current"]["weather"][0].description)//Pushing the current weather to the start of the output array
             library.sixDayIcon.push(data["current"]["weather"][0].icon)//Pushing the current icon to the start of the output array
             days.forEach((day, i) => {//For each day that needs to be displayed we loop over the array inside the API call and return the objects that we need
-                library.sixDayTemp.push(data["daily"][i]["temp"].day)//This stores the average temperature in an array of 6 days + current
+                library.sixDayTemp.push(Math.floor(data["daily"][i]["temp"].day))//This stores the average temperature in an array of 6 days + current
                 library.sixDayWeather.push(data["daily"][i]["weather"][0].description)//This stores the named weather in an array of 6 days + current
                 library.sixDayIcon.push(data["daily"][i]["weather"][0].icon)//This stores the icon name  in an array of 6 days + current
             })
@@ -100,13 +100,13 @@ function outputForm(){
     getId("three").innerHTML = library.daysOfThisWeek[3]
     getId("four").innerHTML = library.daysOfThisWeek[4]
     getId("five").innerHTML = library.daysOfThisWeek[5]
-    getId("currentData").innerHTML = "<tr>" + library.sixDayTemp[0].toString()+ "</tr>"+"<tr>" + "<img src='img/"+ library.sixDayIcon[0].toString() + ".png'></tr>"
-    getId("todayData").innerHTML = "<tr>" + library.sixDayTemp[1].toString()+ "</tr>"+"<tr>" + "<img src='img/"+ library.sixDayIcon[1].toString() + ".png'></tr>"
-    getId("oneData").innerHTML = "<tr>" + library.sixDayTemp[2].toString()+ "</tr>"+"<tr>" + "<img src='img/"+ library.sixDayIcon[2].toString() + ".png'></tr>"
-    getId("twoData").innerHTML = "<tr>" + library.sixDayTemp[3].toString()+ "</tr>"+"<tr>" + "<img src='img/"+ library.sixDayIcon[3].toString() + ".png'></tr>"
-    getId("threeData").innerHTML = "<tr>" + library.sixDayTemp[4].toString()+ "</tr>"+"<tr>" + "<img src='img/"+ library.sixDayIcon[4].toString() + ".png'></tr>"
-    getId("fourData").innerHTML = "<tr>" + library.sixDayTemp[5].toString()+ "</tr>"+"<tr>" + "<img src='img/"+ library.sixDayIcon[5].toString() + ".png'></tr>"
-    getId("fiveData").innerHTML = "<tr>" + library.sixDayTemp[6].toString()+ "</tr>"+"<tr>" + "<img src='img/"+ library.sixDayIcon[6].toString() + ".png'></tr>"
+    getId("currentData").innerHTML = "<div>" + library.sixDayTemp[0].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[0].toString() + ".png'></div>"
+    getId("todayData").innerHTML = "<div>" + library.sixDayTemp[1].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[1].toString() + ".png'></div>"
+    getId("oneData").innerHTML = "<div>" + library.sixDayTemp[2].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[2].toString() + ".png'></div>"
+    getId("twoData").innerHTML = "<div>" + library.sixDayTemp[3].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[3].toString() + ".png'></div>"
+    getId("threeData").innerHTML = "<div>" + library.sixDayTemp[4].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[4].toString() + ".png'></div>"
+    getId("fourData").innerHTML = "<div>" + library.sixDayTemp[5].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[5].toString() + ".png'></div>"
+    getId("fiveData").innerHTML = "<div>" + library.sixDayTemp[6].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[6].toString() + ".png'></div>"
     getId("currentWeather").innerHTML = library.sixDayWeather[0]
     getId("todayWeather").innerHTML = library.sixDayWeather[1]
     getId("oneWeather").innerHTML = library.sixDayWeather[2]
