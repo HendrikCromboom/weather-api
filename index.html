@@ -6,6 +6,7 @@
     <title>Weather API by Hendrik Cromboom</title>
 </head>
 <body>
+<div class="outer-container">
 <div class="container">
     <table>
         <tr>
@@ -20,13 +21,13 @@
                     <div>
                         <label>Country:
                             <br>
-                            <input type="text" name="country" alt="Insert City or Coordinates" id="inputFieldCountry">
+                            <input type="text" name="country" alt="Insert Country" id="inputFieldCountry">
                         </label>
                     </div>
                     <div>
-                        <label>Key:
+                        <label>Language
                             <br>
-                            <input type="text" name="country" alt="Insert City or Coordinates" id="inputFieldKey">
+                            <input type="text" name="language" alt="Insert Language" id="inputFieldLang">
                         </label>
                     </div>
                     <label>
@@ -38,8 +39,6 @@
     </table>
 </div>
 <div class="container">
-    <table>
-    <td>
         <table id="outputTable">
             <thead>
             <tr>
@@ -53,20 +52,27 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th id="currentData"></th>
-                    <th id="todayData"></th>
-                    <th id="oneData"></th>
-                    <th id="twoData"></th>
-                    <th id="threeData"></th>
-                    <th id="fourData"></th>
-                    <th id="fiveData"></th>
+            <tr>
+                <th id="currentWeather" class="weather"></th>
+                <th id="todayWeather" class="weather"></th>
+                <th id="oneWeather" class="weather"></th>
+                <th id="twoWeather" class="weather"></th>
+                <th id="threeWeather" class="weather"></th>
+                <th id="fourWeather" class="weather"></th>
+                <th id="fiveWeather" class="weather"></th>
+            </tr>
+            <tr>
+                <th id="currentData"></th>
+                <th id="todayData"></th>
+                <th id="oneData"></th>
+                <th id="twoData"></th>
+                <th id="threeData"></th>
+                <th id="fourData"></th>
+                <th id="fiveData"></th>
                 </tr>
             </tbody>
-            </td>
         </table>
-
-
+</div>
 </div>
 <script src="script.js"></script>
 </body>
