@@ -17,3 +17,6 @@ body{
     border: whitesmoke 1px solid;
     padding: 1%;
 }
+.weather{
+    color: rgba(0, 0, 0, 0.4);
+}
