@@ -17,7 +17,7 @@ Sprint 2
 Extra challenges
 
     Use the API of https://unsplash.com/ to show a photo of the city they entered in the form. [x]
-    Use a graph library like Google Graphs to show a line graph of the temperature over time.
+    Use a graph library like Google Graphs to show a line graph of the temperature over time. [x]
 
 ### Demo
 
