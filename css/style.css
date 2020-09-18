@@ -67,6 +67,8 @@ body{
 @media only screen and (max-width: 1030px) {
     body {
         flex-direction: column;
+        background: rgb(9,13,157);
+        background: linear-gradient(90deg, lightpink 15%, lightskyblue 80%);
     }
     .container{
         flex-direction: column;
@@ -80,5 +82,15 @@ body{
     .inputTable{
         width: 50%;
         margin-left: 25%;
+        margin-right: 25%;
+    }
+    #chart{
+        display: none;
+    }
+    #inputFieldCity{
+        width: 50%;
+    }
+    #inputFieldCountry{
+        width: 50%;
     }
 }
