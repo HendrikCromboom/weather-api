@@ -77,6 +77,7 @@ function getOneCall(lon, lat) {
                 dayName === 7? dayName=1: dayName ++//if the number of the day exceeds 7 it loops back to index 1:monday
             }
             outputForm()
+            drawChart()
         })
         .catch(error=>{
             console.log(error) // Catches any errors regarding the second fetch -> the fetch is a promise and requires a valid XML input
@@ -111,4 +112,34 @@ function outputForm(){
 }
 function setBackground(thisUrl){
     document.body.style.backgroundImage = `url('${thisUrl}')`
+}
+function drawChart(){
+
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['Day', 'Temperature', 'Today'],
+        ['Current',  library.sixDayTemp[0],     library.sixDayTemp[0]],
+        ['Today',  library.sixDayTemp[1],     library.sixDayTemp[0]],
+        ['Tomorrow',  library.sixDayTemp[2],     library.sixDayTemp[0]],
+        [library.daysOfThisWeek[2],  library.sixDayTemp[3],     library.sixDayTemp[0]],
+        [library.daysOfThisWeek[3],  library.sixDayTemp[4],     library.sixDayTemp[0]],
+        [library.daysOfThisWeek[4],  library.sixDayTemp[5],     library.sixDayTemp[0]],
+        [library.daysOfThisWeek[5],  library.sixDayTemp[6],     library.sixDayTemp[0]]
+    ]);
+
+    var options = {
+        title: 'Temperature',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+}
+
 }
