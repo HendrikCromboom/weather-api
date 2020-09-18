@@ -22,8 +22,15 @@ var library = {
     daysOfThisWeek: []
 };
 function formSubmit() {
+    resetArrays();
     getInputFields();
-}
+} //End of auto call from DOM
+function resetArrays() {
+    library.sixDayTemp = [];
+    library.sixDayWeather = [];
+    library.sixDayIcon = [];
+    library.daysOfThisWeek = [];
+} //End of reset
 function getInputFields() {
     var city = returnValue("inputFieldCity"); // Local input values for the 2 boxes on the HTML
     var country = returnValue("inputFieldCountry"); //
@@ -31,7 +38,7 @@ function getInputFields() {
     getImage(city);
     resetValue("inputFieldCity"); //Resetting the input fields: shorthand -> check top of page
     resetValue("inputFieldCountry"); //Resetting the input fields: shorthand -> check top of page
-}
+} //End of input gathering
 // Fetching the data from the API
 function getForecast(city, country) {
     // The &units turns the returned api to degrees C instead of degrees F
@@ -42,8 +49,9 @@ function getForecast(city, country) {
         var longitude = data["city"]["coord"].lon; //i decided to localize these variables
         var latitude = data["city"]["coord"].lat; // <-!
         getOneCall(longitude, latitude); // passing the variables on to the next function to keep the global scope clean
+        document.title = "Weather API of " + city + ", " + country;
     })["catch"](function (error) {
-        console.log(error); // Catches any errors regarding the fetch -> the fetch is a promise and requires a valid XML input
+        alert(error); // Catches any errors regarding the fetch -> the fetch is a promise and requires a valid XML input
     });
 }
 function getOneCall(lon, lat) {
@@ -66,9 +74,9 @@ function getOneCall(lon, lat) {
             dayName === 7 ? dayName = 1 : dayName++; //if the number of the day exceeds 7 it loops back to index 1:monday
         }
         outputForm();
-        drawChart();
+        drawCharts();
     })["catch"](function (error) {
-        console.log(error); // Catches any errors regarding the second fetch -> the fetch is a promise and requires a valid XML input
+        alert(error); // Catches any errors regarding the second fetch -> the fetch is a promise and requires a valid XML input
     });
 }
 function getImage(city) {
@@ -76,12 +84,17 @@ function getImage(city) {
         .then(function (response) { return response.json(); })
         .then(function (data) {
         console.log(data);
-        var urls = data.urls;
-        var regular = urls.regular;
-        setBackground(regular);
+        var urls = data.urls; //The URLS will contain an array of image URLS
+        var regular = urls.regular; //Regular will be a randomized popular image URL
+        setBackground(regular); //Passing the url to a separate function to keep the code clean
+    })["catch"](function (error) {
+        alert(error); // Catches any errors regarding the image fetch -> the fetch is a promise and requires a valid XML input
     });
 }
 function outputForm() {
+    getId("divs").innerHTML = //We set the HTML structure to past to here
+        //Backticks are used to make using apostrophes easier, DONT comment in this section
+        "<div class=\"wrapper\">\n        <div id=\"current\">Welcome! Enjoy the weather!</div>\n    <div id=\"currentWeather\" class=\"weather\"></div>\n        <div id=\"currentData\"></div>\n        </div>\n        <div class=\"wrapper\">\n    <div id=\"today\"></div>\n        <div id=\"todayWeather\" class=\"weather\"></div>\n        <div id=\"todayData\"></div>\n        </div>\n        <div class=\"wrapper\">\n    <div id=\"one\"></div>\n        <div id=\"oneWeather\" class=\"weather\"></div>\n        <div id=\"oneData\"></div>\n        </div>\n        <div class=\"wrapper\">\n    <div id=\"two\"></div>\n        <div id=\"twoWeather\" class=\"weather\"></div>\n        <div id=\"twoData\"></div>\n        </div>\n        <div class=\"wrapper\">\n    <div id=\"three\"></div>\n        <div id=\"threeWeather\" class=\"weather\"></div>\n        <div id=\"threeData\"></div>\n        </div>\n        <div class=\"wrapper\">\n    <div id=\"four\"></div>\n        <div id=\"fourWeather\" class=\"weather\"></div>\n        <div id=\"fourData\"></div>\n        </div>\n        <div class=\"wrapper\">\n    <div id=\"five\"></div>\n        <div id=\"fiveWeather\" class=\"weather\"></div>\n        <div id=\"fiveData\"></div>\n        </div>"; //End of pasted HTML structure, comments work AGAIN here
     getId("current").innerHTML = "Current" + "<div>" + "<img src='img/" + library.sixDayIcon[0].toString() + ".png'></div>";
     getId("today").innerHTML = "Today" + "<div>" + "<img src='img/" + library.sixDayIcon[1].toString() + ".png'></div>";
     getId("one").innerHTML = "Tomorrow" + "<div>" + "<img src='img/" + library.sixDayIcon[2].toString() + ".png'></div>";
@@ -96,14 +109,17 @@ function outputForm() {
     getId("threeData").innerHTML = "<div>" + library.sixDayTemp[4].toString() + "°C</div>";
     getId("fourData").innerHTML = "<div>" + library.sixDayTemp[5].toString() + "°C</div>";
     getId("fiveData").innerHTML = "<div>" + library.sixDayTemp[6].toString() + "°C</div>";
-}
+} //End of DOM insert, might want to loop over these if I find the time
 function setBackground(thisUrl) {
-    document.body.style.backgroundImage = "url('" + thisUrl + "')";
+    document.body.style.backgroundImage = "url('" + thisUrl + "')"; //The background is directly altered in the DOM
 }
-function drawChart() {
+function drawCharts() {
+    // @ts-ignore
     google.charts.load('current', { 'packages': ['corechart'] });
+    // @ts-ignore
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
+        // @ts-ignore
         var data = google.visualization.arrayToDataTable([
             ['Day', 'Temperature', 'Today'],
             ['Current', library.sixDayTemp[0], library.sixDayTemp[0]],
@@ -112,14 +128,15 @@ function drawChart() {
             [library.daysOfThisWeek[2], library.sixDayTemp[3], library.sixDayTemp[0]],
             [library.daysOfThisWeek[3], library.sixDayTemp[4], library.sixDayTemp[0]],
             [library.daysOfThisWeek[4], library.sixDayTemp[5], library.sixDayTemp[0]],
-            [library.daysOfThisWeek[5], library.sixDayTemp[6], library.sixDayTemp[0]]
-        ]);
+            [library.daysOfThisWeek[5], library.sixDayTemp[6], library.sixDayTemp[0]] //No comma here
+        ]); //Nested array
         var options = {
             title: 'Temperature',
             curveType: 'function',
             legend: { position: 'bottom' }
         };
+        // @ts-ignore
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-        chart.draw(data, options);
+        chart.draw(data, options); //End of google charts script
     }
 }

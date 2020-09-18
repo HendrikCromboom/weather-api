@@ -31,8 +31,15 @@ const library : {
 
 
 function formSubmit(){// Function that gets called by the inline HTML to prevent default reload
+    resetArrays()
     getInputFields();
-}
+}//End of auto call from DOM
+function resetArrays(){//We have to reset the arrays, otherwise we will keep pushing new data on top of the old one since these arrays are in a globalized constructor/object
+    library.sixDayTemp=[]
+    library.sixDayWeather=[]
+    library.sixDayIcon=[]
+    library.daysOfThisWeek=[]
+}//End of reset
 function getInputFields(){// Pulling the input values from the DOM
     let city: string = returnValue("inputFieldCity");// Local input values for the 2 boxes on the HTML
     let country: string = returnValue("inputFieldCountry");//
@@ -41,7 +48,7 @@ function getInputFields(){// Pulling the input values from the DOM
     resetValue("inputFieldCity")//Resetting the input fields: shorthand -> check top of page
     resetValue("inputFieldCountry")//Resetting the input fields: shorthand -> check top of page
 
-}
+}//End of input gathering
 // Fetching the data from the API
 function getForecast(city, country) {
     // The &units turns the returned api to degrees C instead of degrees F
@@ -52,9 +59,10 @@ function getForecast(city, country) {
                     let longitude = data["city"]["coord"].lon //i decided to localize these variables
                     let latitude = data["city"]["coord"].lat   // <-!
                     getOneCall(longitude, latitude)// passing the variables on to the next function to keep the global scope clean
+            document.title = "Weather API of " + city+", "+country
         })
         .catch(error=>{
-            console.log(error) // Catches any errors regarding the fetch -> the fetch is a promise and requires a valid XML input
+            alert(error) // Catches any errors regarding the fetch -> the fetch is a promise and requires a valid XML input
         })
 }
 function getOneCall(lon, lat) {
@@ -77,23 +85,63 @@ function getOneCall(lon, lat) {
                 dayName === 7? dayName=1: dayName ++//if the number of the day exceeds 7 it loops back to index 1:monday
             }
             outputForm()
-            drawChart()
+            drawCharts()
         })
         .catch(error=>{
-            console.log(error) // Catches any errors regarding the second fetch -> the fetch is a promise and requires a valid XML input
+            alert(error) // Catches any errors regarding the second fetch -> the fetch is a promise and requires a valid XML input
         })
 }
-function getImage(city){
+function getImage(city){//Fetches an image for the background based on the name of the city getched from input
     fetch("https://api.unsplash.com/photos/random?query="+ city+ ",city&client_id=W-gpszfB92DY_MRzZH_iXOkG1dCl_yte33wiDhD6Jvk")
         .then(function (response) { return response.json(); })
         .then(function (data) {
             console.log(data)
-            let urls = data.urls
-            let regular = urls.regular
-            setBackground(regular)
+            let urls:any = data.urls//The URLS will contain an array of image URLS
+            let regular:string = urls.regular//Regular will be a randomized popular image URL
+            setBackground(regular)//Passing the url to a separate function to keep the code clean
                 })
+        .catch(error=>{
+            alert(error) // Catches any errors regarding the image fetch -> the fetch is a promise and requires a valid XML input
+        })
 }
-function outputForm(){
+function outputForm(){//Output all the values to the DOM
+    getId("divs").innerHTML= //We set the HTML structure to past to here
+//Backticks are used to make using apostrophes easier, DONT comment in this section
+        `<div class="wrapper">
+        <div id="current">Welcome! Enjoy the weather!</div>
+    <div id="currentWeather" class="weather"></div>
+        <div id="currentData"></div>
+        </div>
+        <div class="wrapper">
+    <div id="today"></div>
+        <div id="todayWeather" class="weather"></div>
+        <div id="todayData"></div>
+        </div>
+        <div class="wrapper">
+    <div id="one"></div>
+        <div id="oneWeather" class="weather"></div>
+        <div id="oneData"></div>
+        </div>
+        <div class="wrapper">
+    <div id="two"></div>
+        <div id="twoWeather" class="weather"></div>
+        <div id="twoData"></div>
+        </div>
+        <div class="wrapper">
+    <div id="three"></div>
+        <div id="threeWeather" class="weather"></div>
+        <div id="threeData"></div>
+        </div>
+        <div class="wrapper">
+    <div id="four"></div>
+        <div id="fourWeather" class="weather"></div>
+        <div id="fourData"></div>
+        </div>
+        <div class="wrapper">
+    <div id="five"></div>
+        <div id="fiveWeather" class="weather"></div>
+        <div id="fiveData"></div>
+        </div>`//End of pasted HTML structure, comments work AGAIN here
     getId("current").innerHTML = "Current"+"<div>" + "<img src='img/"+ library.sixDayIcon[0].toString() + ".png'></div>"
     getId("today").innerHTML = "Today"+"<div>" + "<img src='img/"+ library.sixDayIcon[1].toString() + ".png'></div>"
     getId("one").innerHTML = "Tomorrow"+"<div>" + "<img src='img/"+ library.sixDayIcon[2].toString() + ".png'></div>"
@@ -109,37 +157,37 @@ function outputForm(){
     getId("fourData").innerHTML = "<div>" + library.sixDayTemp[5].toString()+ "°C</div>"
     getId("fiveData").innerHTML = "<div>" + library.sixDayTemp[6].toString()+ "°C</div>"
 
-}
+}//End of DOM insert, might want to loop over these if I find the time
 function setBackground(thisUrl){
-    document.body.style.backgroundImage = `url('${thisUrl}')`
+    document.body.style.backgroundImage = `url('${thisUrl}')`//The background is directly altered in the DOM
 }
-function drawChart(){
+function drawCharts(){//We use google charts to display a line graph of the current and future temperatures
+// @ts-ignore
+    google.charts.load('current', {'packages':['corechart']});
+// @ts-ignore
+    google.charts.setOnLoadCallback(drawChart);
 
-
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-
-function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-        ['Day', 'Temperature', 'Today'],
-        ['Current',  library.sixDayTemp[0],     library.sixDayTemp[0]],
-        ['Today',  library.sixDayTemp[1],     library.sixDayTemp[0]],
-        ['Tomorrow',  library.sixDayTemp[2],     library.sixDayTemp[0]],
-        [library.daysOfThisWeek[2],  library.sixDayTemp[3],     library.sixDayTemp[0]],
-        [library.daysOfThisWeek[3],  library.sixDayTemp[4],     library.sixDayTemp[0]],
-        [library.daysOfThisWeek[4],  library.sixDayTemp[5],     library.sixDayTemp[0]],
-        [library.daysOfThisWeek[5],  library.sixDayTemp[6],     library.sixDayTemp[0]]
-    ]);
+function drawChart() {//Google advises to use vars here since the script needs to globalize to a degree
+    // @ts-ignore
+    var data = google.visualization.arrayToDataTable([//The array displays all the fetched temperatures, the array has to have 3 cells on each line
+        ['Day', 'Temperature', 'Today'],//
+        ['Current',  library.sixDayTemp[0],     library.sixDayTemp[0]],//
+        ['Today',  library.sixDayTemp[1],     library.sixDayTemp[0]],//
+        ['Tomorrow',  library.sixDayTemp[2],     library.sixDayTemp[0]],//
+        [library.daysOfThisWeek[2],  library.sixDayTemp[3],     library.sixDayTemp[0]],//
+        [library.daysOfThisWeek[3],  library.sixDayTemp[4],     library.sixDayTemp[0]],//
+        [library.daysOfThisWeek[4],  library.sixDayTemp[5],     library.sixDayTemp[0]],//
+        [library.daysOfThisWeek[5],  library.sixDayTemp[6],     library.sixDayTemp[0]]//No comma here
+    ]);//Nested array
 
     var options = {
-        title: 'Temperature',
+        title: 'Temperature',//Title displayed in the chart
         curveType: 'function',
         legend: { position: 'bottom' }
     };
 
+    // @ts-ignore
     var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-    chart.draw(data, options);
+    chart.draw(data, options);//End of google charts script
 }
-
 }
