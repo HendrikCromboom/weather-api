@@ -1,5 +1,11 @@
 # Weather API
 
+### Demo
+
+https://hendrikcromboom.github.io/weather-api/
+
+---
+
 ### Goal
 
 Sprint 1
@@ -19,12 +25,24 @@ Extra challenges
     Use the API of https://unsplash.com/ to show a photo of the city they entered in the form. [x]
     Use a graph library like Google Graphs to show a line graph of the temperature over time. [x]
 
-### Demo
+---
 
-Live link to be added...
+### Tools
+
+* HTML
+* CSS
+* JavaScript
+* TypeScript
+* JSON
+* XML
+* PHPSTORM
 
 ### Credits
 
 Weather API: https://home.openweathermap.org/
+
+Google Script: https://www.gstatic.com/charts/loader.js
+
+Unsplat API: https://api.unsplash.com
 
 Page by: Hendrik Cromboom
