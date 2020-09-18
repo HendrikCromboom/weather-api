@@ -1,7 +1,7 @@
 
 
 body{
-    background: rgb(9,13,157) url("img/photo-1519681393784-d120267933ba.jpeg");
+    background: rgb(9,13,157) url("../img/photo-1519681393784-d120267933ba.jpeg");
     background-size: cover;
     display: flex;
     flex-direction: column;
