@@ -6,30 +6,30 @@
     <title>Weather API by Hendrik Cromboom</title>
 </head>
 <body>
+<div id="outerco">
 <div class="inputTable">
-    <table>
-        <tr>
-            <td>
+
                 <form autocomplete="off" id="inputForm" onsubmit="event.preventDefault(); formSubmit()">
                     <div>
-                        <label>City:
+                        <label>City:</label>
                             <br>
                             <input type="text" name="city" alt="Insert City or Coordinates" id="inputFieldCity">
-                        </label>
+
                     </div>
                     <div>
-                        <label>Country:
+                        <label>Country:</label>
                             <br>
                             <input type="text" name="country" alt="Insert Country" id="inputFieldCountry">
-                        </label>
+
                     </div>
-                    <label>
+                    <label></label>
                         <br>
                         <input type="submit" value="Submit">
-                    </label>
+
                 </form>
-            </td>
-    </table>
+
+</div>
+<div class="container" id="chart"><div id="curve_chart" style="width: 250px; height: 250px"></div></div>
 </div>
 <div class="container">
     <div class="wrapper">
@@ -78,6 +78,7 @@
 
 </div>
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

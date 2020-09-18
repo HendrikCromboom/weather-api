@@ -1,8 +1,8 @@
 
 
 body{
-    background: rgb(9,13,157);
-    background: linear-gradient(90deg, lightpink 15%, lightskyblue 80%);
+    background: rgb(9,13,157) url("img/photo-1519681393784-d120267933ba.jpeg");
+    background-size: cover;
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -12,23 +12,7 @@ body{
     overflow-y: auto;
 }
 
-@media only screen and (max-width: 680px) {
-    body {
-        flex-direction: column;
-    }
-    .container{
-        flex-direction: column;
-        margin-left: 25%;
 
-    }
-    .wrapper{
-        width: 50%;
-
-    }
-    .inputTable{
-        width: 50%;
-    }
-}
 .inputTable{
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
@@ -36,7 +20,8 @@ body{
     border: whitesmoke 1px solid;
     display: flex;
     flex-wrap: nowrap;
-    margin-top: 15%;
+    flex-direction: row;
+    margin-top: 13%;
     margin-left: 40%;
     width: 20%;
     padding: 1%;
@@ -63,4 +48,37 @@ body{
     border-radius: 15px 15px 30px;
     border: whitesmoke 1px solid;
     padding: 2%;
+}
+#chart {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    height: 50%;
+    justify-content: center;
+    opacity: 0.6;
+    border-radius: 15px 15px 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#outerco{
+    flex-direction: row;
+    display: flex;
+}
+@media only screen and (max-width: 680px) {
+    body {
+        flex-direction: column;
+    }
+    .container{
+        flex-direction: column;
+        margin-left: 25%;
+
+    }
+    .wrapper{
+        width: 50%;
+
+    }
+    .inputTable{
+        width: 50%;
+        margin-left: 25%;
+    }
 }
