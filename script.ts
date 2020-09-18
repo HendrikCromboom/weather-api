@@ -37,7 +37,7 @@ function getInputFields(){// Pulling the input values from the DOM
     let city: string = returnValue("inputFieldCity");// Local input values for the 2 boxes on the HTML
     let country: string = returnValue("inputFieldCountry");//
     getForecast(city, country);//Calls the API function, will setup a class later
-    //getImage(city);
+    getImage(city);
     resetValue("inputFieldCity")//Resetting the input fields: shorthand -> check top of page
     resetValue("inputFieldCountry")//Resetting the input fields: shorthand -> check top of page
 
@@ -93,27 +93,20 @@ function getImage(city){
                 })
 }
 function outputForm(){
-    getId("current").innerHTML = "Current"
-    getId("today").innerHTML = "Today"
-    getId("one").innerHTML = "Tomorrow"
-    getId("two").innerHTML = library.daysOfThisWeek[2]
-    getId("three").innerHTML = library.daysOfThisWeek[3]
-    getId("four").innerHTML = library.daysOfThisWeek[4]
-    getId("five").innerHTML = library.daysOfThisWeek[5]
-    getId("currentData").innerHTML = "<div>" + library.sixDayTemp[0].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[0].toString() + ".png'></div>"
-    getId("todayData").innerHTML = "<div>" + library.sixDayTemp[1].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[1].toString() + ".png'></div>"
-    getId("oneData").innerHTML = "<div>" + library.sixDayTemp[2].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[2].toString() + ".png'></div>"
-    getId("twoData").innerHTML = "<div>" + library.sixDayTemp[3].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[3].toString() + ".png'></div>"
-    getId("threeData").innerHTML = "<div>" + library.sixDayTemp[4].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[4].toString() + ".png'></div>"
-    getId("fourData").innerHTML = "<div>" + library.sixDayTemp[5].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[5].toString() + ".png'></div>"
-    getId("fiveData").innerHTML = "<div>" + library.sixDayTemp[6].toString()+ "°C</div>"+"<div>" + "<img src='img/"+ library.sixDayIcon[6].toString() + ".png'></div>"
-    getId("currentWeather").innerHTML = library.sixDayWeather[0]
-    getId("todayWeather").innerHTML = library.sixDayWeather[1]
-    getId("oneWeather").innerHTML = library.sixDayWeather[2]
-    getId("twoWeather").innerHTML = library.sixDayWeather[3]
-    getId("threeWeather").innerHTML = library.sixDayWeather[4]
-    getId("fourWeather").innerHTML = library.sixDayWeather[5]
-    getId("fiveWeather").innerHTML = library.sixDayWeather[6]
+    getId("current").innerHTML = "Current"+"<div>" + "<img src='img/"+ library.sixDayIcon[0].toString() + ".png'></div>"
+    getId("today").innerHTML = "Today"+"<div>" + "<img src='img/"+ library.sixDayIcon[1].toString() + ".png'></div>"
+    getId("one").innerHTML = "Tomorrow"+"<div>" + "<img src='img/"+ library.sixDayIcon[2].toString() + ".png'></div>"
+    getId("two").innerHTML = library.daysOfThisWeek[2]+"<div>" + "<img src='img/"+ library.sixDayIcon[3].toString() + ".png'></div>"
+    getId("three").innerHTML = library.daysOfThisWeek[3]+"<div>" + "<img src='img/"+ library.sixDayIcon[4].toString() + ".png'></div>"
+    getId("four").innerHTML = library.daysOfThisWeek[4]+"<div>" + "<img src='img/"+ library.sixDayIcon[5].toString() + ".png'></div>"
+    getId("five").innerHTML = library.daysOfThisWeek[5]+"<div>" + "<img src='img/"+ library.sixDayIcon[6].toString() + ".png'></div>"
+    getId("currentData").innerHTML = "<div>" + library.sixDayTemp[0].toString()+ "°C</div>"
+    getId("todayData").innerHTML = "<div>" + library.sixDayTemp[1].toString()+ "°C</div>"
+    getId("oneData").innerHTML = "<div>" + library.sixDayTemp[2].toString()+ "°C</div>"
+    getId("twoData").innerHTML = "<div>" + library.sixDayTemp[3].toString()+ "°C</div>"
+    getId("threeData").innerHTML = "<div>" + library.sixDayTemp[4].toString()+ "°C</div>"
+    getId("fourData").innerHTML = "<div>" + library.sixDayTemp[5].toString()+ "°C</div>"
+    getId("fiveData").innerHTML = "<div>" + library.sixDayTemp[6].toString()+ "°C</div>"
 
 }
 function setBackground(thisUrl){
